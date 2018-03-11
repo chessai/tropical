@@ -33,7 +33,6 @@ import Data.Semiring (Semiring(..))
 import GHC.Base (build)
 import GHC.Generics (Generic, Generic1)
 import GHC.Read
-import GHC.Real (Ratio(..))
 import GHC.Show (appPrec)
 import Prelude hiding ((^))
 import Text.ParserCombinators.ReadPrec ((+++), prec, step)
@@ -124,13 +123,6 @@ instance (Ord a, Semiring a) => Num (Tropical a) where
   signum _        = one
   fromInteger 0 = Infinity
   fromInteger _ = Min one 
-
-instance (Ord a, Num a, Semiring a) => Fractional (Tropical a) where
-  fromRational (x :% y) = (fromInteger x) / (fromInteger y) 
-  
-  _ / Infinity  = undefined
-  Infinity / _  = Infinity
-  Min a / Min b = Min (a - b)
 
 instance Read a => Read (Tropical a) where
   readPrec =

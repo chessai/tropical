@@ -33,7 +33,6 @@ import Data.Semiring (Semiring(..))
 import GHC.Base (build)
 import GHC.Generics (Generic, Generic1)
 import GHC.Read
-import GHC.Real (Ratio(..))
 import GHC.Show (appPrec)
 import Prelude hiding ((^))
 import Text.ParserCombinators.ReadPrec ((+++), prec, step)
@@ -47,7 +46,7 @@ tropical _ f (Max x) = f x
 
 isTropical :: Tropical a -> Bool
 isTropical (Max _) = True
-isTropical _            = False
+isTropical _       = False
 
 isInfinity :: Tropical a -> Bool
 isInfinity Infinity = True
@@ -124,13 +123,6 @@ instance (Ord a, Semiring a) => Num (Tropical a) where
   signum _        = one
   fromInteger 0 = Infinity
   fromInteger _ = Max one 
-
-instance (Ord a, Num a, Semiring a) => Fractional (Tropical a) where
-  fromRational (x :% y) = (fromInteger x) / (fromInteger y) 
-  
-  _ / Infinity  = undefined
-  Infinity / _  = Infinity
-  Max a / Max b = Max (a - b)
 
 instance Read a => Read (Tropical a) where
   readPrec =
