@@ -105,10 +105,15 @@ _ ^ Infinity = Infinity
 
 deriving instance Eq a   => Eq (Tropical a)
 deriving instance Data a => Data (Tropical a)
-deriving instance Ord a  => Ord (Tropical a)
 deriving instance Show a => Show (Tropical a)
 deriving instance Generic   (Tropical a)
 deriving instance Generic1  Tropical
+
+instance (Ord a) => Ord (Tropical a) where
+  compare Infinity Infinity = EQ
+  compare _        Infinty  = LT
+  compare Infinity _        = GT
+  compare (Min x)  (Min y)  = compare x y
 
 -- Most of these methods are nonsensical.
 -- This is mostly just here for (+) and (*).
