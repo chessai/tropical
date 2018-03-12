@@ -153,7 +153,7 @@ instance (Ord a, Semiring a) => Semiring (Tropical a) where
   
   Infinity `times` _ = Infinity
   _ `times` Infinity = Infinity
-  times (Min a) (Min b) = Min (times a b)
+  times (Min a) (Min b) = Min (plus a b)
   
   one  = Min zero
 

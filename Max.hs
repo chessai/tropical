@@ -153,7 +153,7 @@ instance (Ord a, Semiring a) => Semiring (Tropical a) where
   
   Infinity `times` _ = Infinity
   _ `times` Infinity = Infinity
-  times (Max a) (Max b) = Max (times a b)
+  times (Max a) (Max b) = Max (plus a b)
   
   one  = Max zero
 
